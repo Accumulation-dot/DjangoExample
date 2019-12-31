@@ -21,3 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('jwt-token-auth/', obtain_jwt_token),
 ]
+
+
+
+

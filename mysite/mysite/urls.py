@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('jwt-token-auth/', obtain_jwt_token),
     path('orders/', views.orders_list),
-    path('orders/<int:id>', views.order_details)
+    path('orders/<int:good>', views.order_details),
+    path('orders/<int:order>/<int:good>/', views.order_details_price)
 ]
 
 

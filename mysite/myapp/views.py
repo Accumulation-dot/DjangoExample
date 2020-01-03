@@ -53,13 +53,20 @@ class RequestError:
 
 def orders_list(request):
     order_all = EntryOrder.objects.all()
-    serializer = EntryOrderModelSerializer(order_all, many=True)  ## json.dumps(dict_all, cls=DecimalEncoder)
+    serializer = EntryOrderSummarySerializer(order_all, many=True)  ## json.dumps(dict_all, cls=DecimalEncoder)
     return JSONResponse(serializer.data)
 
 
-def order_details(request, id):
-    # good_query_list = Goods.objects.filter(order=id)
-    order = EntryOrder.objects.get(id=id)
-    detail = EntryOrderDetail.objects.filter(order=order.id)
-    serializer = GoodsModelSerializer(detail, many=True)
+def order_details(request, good):
+    order = EntryOrder.objects.get(id=good)
+    serializer = EntryOrderModelSerializer(order, many=False)
+    # order = EntryOrderDetail.objects.filter(order=id)
+    # serializer = EntryOrderDetailModelSerializer(order, many=True)
+    return JSONResponse(serializer.data)
+
+
+def order_details_price(request, order, good):
+    price = EntryOrderDetail.objects.get(order=order, good=good)
+    # price.good.price = price.price
+    serializer = EntryOrderDetailModelSerializer(price, many=False)
     return JSONResponse(serializer.data)

@@ -25,36 +25,6 @@ class Tags(models.Model):
         verbose_name_plural = verbose_name
 
 
-class EntryOrder(models.Model):
-    name = models.CharField(verbose_name='订单描述', max_length=60, help_text='订单描述', null=False, default='写点啥都行啊')
-    number = models.CharField(max_length=60, null=True, verbose_name='订单号码', help_text='订单号码 不一定存在 不存在就是null')
-    total = models.DecimalField(verbose_name='总价', help_text='当前订单花费多少钱', max_digits=14, decimal_places=2)
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = '进货单'
-        verbose_name_plural = verbose_name
-
-class SoldOrder(models.Model):
-    name = models.CharField(verbose_name='订单描述',
-                            max_length=60,
-                            help_text='订单描述',
-                            blank=False, default='写点啥都行啊')
-    number = models.CharField(max_length=60, blank=True, verbose_name='订单号码', help_text='订单号码 不一定存在 不存在就是null')
-    total = models.DecimalField(verbose_name='总价', help_text='当前订单花费多少钱', max_digits=14, decimal_places=2)
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = '售货单'
-        verbose_name_plural = verbose_name
-
-
 class Goods(models.Model):
     name = models.CharField(default='',
                             max_length=30,
@@ -83,10 +53,6 @@ class Goods(models.Model):
 
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
-    entry_order = models.ManyToManyField(EntryOrder, through='EntryOrderDetail', through_fields=('good', 'order'))
-
-    sold_order = models.ManyToManyField(SoldOrder, through='SoldOrderDetails', through_fields=('good', 'order'))
-
     def __str__(self):
         return self.name
 
@@ -108,6 +74,40 @@ class Goods(models.Model):
 #     class Meta:
 #         verbose_name = '采购价格'
 #         verbose_name_plural = verbose_name
+
+
+class EntryOrder(models.Model):
+    name = models.CharField(verbose_name='订单描述', max_length=60, help_text='订单描述', null=False, default='写点啥都行啊')
+    number = models.CharField(max_length=60, null=True, verbose_name='订单号码', help_text='订单号码 不一定存在 不存在就是null')
+    total = models.DecimalField(verbose_name='总价', help_text='当前订单花费多少钱', max_digits=14, decimal_places=2)
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    goods = models.ManyToManyField(Goods, through='EntryOrderDetail', through_fields=('order', 'good'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '进货单'
+        verbose_name_plural = verbose_name
+
+
+class SoldOrder(models.Model):
+    name = models.CharField(verbose_name='订单描述',
+                            max_length=60,
+                            help_text='订单描述',
+                            blank=False, default='写点啥都行啊')
+    number = models.CharField(max_length=60, blank=True, verbose_name='订单号码', help_text='订单号码 不一定存在 不存在就是null')
+    total = models.DecimalField(verbose_name='总价', help_text='当前订单花费多少钱', max_digits=14, decimal_places=2)
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    goods = models.ManyToManyField(Goods, through='SoldOrderDetails', through_fields=('order', 'good'))
+    # sold_order = models.ManyToManyField(SoldOrder, through='SoldOrderDetails', through_fields=('good', 'order'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '售货单'
+        verbose_name_plural = verbose_name
 
 
 class EntryOrderDetail(models.Model):

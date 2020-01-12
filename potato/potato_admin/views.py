@@ -33,7 +33,7 @@ def login(request):
             # 密码长度验证
             # 更多的其它验证.....
             try:
-                user = User.objects.get(name=username)
+                user = User.objects.get(name=username)[0]
             except:
                 return render(request, 'login/login.html')
             if user.password == password:

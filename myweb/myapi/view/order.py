@@ -42,3 +42,13 @@ class OrderInfoList(generics.ListCreateAPIView):
 class OrderInfoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = OrderInfo
     serializer_class = OrderInfoSerializer
+
+
+class UserOrderInfoList(generics.ListCreateAPIView):
+    queryset = UserOrderInfo
+    serializer_class = UserOrderInfoSerializer
+
+
+class UserOrderInfoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserOrderInfo
+    serializer_class = UserOrderInfoSerializer

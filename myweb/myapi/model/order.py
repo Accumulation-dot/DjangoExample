@@ -10,7 +10,7 @@ class Seller(UUID):
     name = models.CharField(max_length=50,
                             verbose_name='商家名', help_text='商家名称')
     nick_name = models.CharField(max_length=50,
-                                 verbose_name='', help_text='', blank=True, default='')
+                                 verbose_name='商家名称', help_text='商家名称', blank=True, default='')
 
     class Meta:
         verbose_name = '商家信息'
@@ -25,7 +25,7 @@ class Order(UUID):
     order_num = models.CharField(max_length=50, blank=True, default='')
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, blank=True, default='',
                                verbose_name='卖家', help_text='卖家的订单')
-    commodity_list = models.ManyToManyField(to=Commodity, through='OrderInformation',
+    commodity_list = models.ManyToManyField(to=Commodity, through='OrderInfo',
                                             through_fields=('order', 'commodity'),
                                             verbose_name='订单的商品信息', help_text='订单内所有的商品的信息')
 
@@ -39,8 +39,8 @@ class UserOrder(UUID):
                              verbose_name='订单用户名', help_text='订单信息用户名')
     total = models.FloatField(verbose_name='总价', help_text='订单需要的价格')
     order_num = models.CharField(max_length=50, blank=True, default='')
-    commodity_list = models.ManyToManyField(to=Commodity, through='OrderInformation',
-                                            through_fields=('order', 'commodity'),
+    commodity_list = models.ManyToManyField(to=Commodity, through='OrderInfo',
+                                            through_fields=('user', 'commodity'),
                                             verbose_name='订单的商品信息', help_text='订单内所有的商品的信息')
 
     class Meta:
@@ -63,3 +63,18 @@ class OrderInfo(UUID):
         verbose_name = '订单详情'
         verbose_name_plural = verbose_name
 
+
+class UserOrderInfo(UUID):
+    """ 订单的信息 """
+    order = models.ForeignKey(UserOrder, on_delete=models.CASCADE,
+                              verbose_name='订单ID', help_text='订单的ID')
+    commodity = models.ForeignKey(Commodity, on_delete=models.CASCADE,
+                                  verbose_name='商品ID', help_text='商品的ID')
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.0, blank=True,
+                                verbose_name='价格', help_text='商品价格')
+    num = models.PositiveSmallIntegerField(default=1, blank=True,
+                                           verbose_name='商品数量', help_text='商品的数量')
+
+    class Meta:
+        verbose_name = '订单详情'
+        verbose_name_plural = verbose_name

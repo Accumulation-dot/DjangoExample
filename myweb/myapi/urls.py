@@ -32,10 +32,12 @@ urlpatterns = [
         path('commodity_detail/', CommodityDetail.as_view()),
         path('order_list/', OrderList.as_view()),
         path('order_detail/', OrderDetail.as_view()),
-        path('user_order_list/', UserOrderList.as_view()),
-        path('user_order_detail/', UserOrderDetail.as_view()),
         path('order_info_list/', OrderInfoList.as_view()),
         path('order_info_detail/', OrderInfoDetail.as_view()),
+        path('user_order_list/', UserOrderList.as_view()),
+        path('user_order_detail/', UserOrderDetail.as_view()),
+        path('user_order_info_list/', UserOrderInfoList.as_view()),
+        path('user_order_info_detail/', UserOrderInfoDetail.as_view()),
     ]))
 
 

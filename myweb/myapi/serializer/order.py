@@ -28,3 +28,11 @@ class UserOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserOrder
         exclude = ('created', 'updated',)
+
+
+class UserOrderInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserOrderInfo
+        exclude = ('created', 'updated',)
+

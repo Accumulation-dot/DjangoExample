@@ -61,7 +61,8 @@ class Category(Creation):
     img = models.ForeignKey(Image, on_delete=models.CASCADE,
                             verbose_name='图片', help_text='图片')
 
-    commodity = models.ManyToManyField(Commodity, blank=True, verbose_name='产品', help_text='产品')
+    commodity = models.ManyToManyField(Commodity, blank=True,
+                                       verbose_name='产品', help_text='产品')
 
     def __str__(self):
         return self.title

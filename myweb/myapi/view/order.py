@@ -4,38 +4,41 @@ from myapi.model.order import *
 from myapi.serializer.order import *
 
 
-class CommodityList(generics.ListCreateAPIView):
-    """ Commodity list create """
-    queryset = Commodity.objects.all()
-    serializer_class = CommoditySerializer
+class SellerList(generics.ListCreateAPIView):
+    queryset = Seller.objects.all()
+    serializer_class = SellerSerializer
 
 
-class CommodityDetail(generics.RetrieveUpdateDestroyAPIView):
-    """Commodity get update """
-    queryset = Commodity.objects.all()
-    serializer_class = CommoditySerializer
+class SellerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Seller.objects.all()
+    serializer_class = SellerSerializer
 
 
-class TagList(generics.ListCreateAPIView):
-    """ Tag list create """
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
+class OrderList(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 
-class TagDetail(generics.RetrieveUpdateDestroyAPIView):
-    """Tag get update"""
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
+class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 
-class CategoryList(generics.ListCreateAPIView):
-    """Category list create"""
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class UserOrderList(generics.ListCreateAPIView):
+    queryset = UserOrder.objects.all()
+    serializer_class = UserOrderSerializer
 
 
-class CategoryDetail(generics.RetrieveUpdateAPIView):
-    """Category get update"""
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class UserOrderDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserOrder.objects.all()
+    serializer_class = UserOrderSerializer
 
+
+class OrderInfoList(generics.ListCreateAPIView):
+    queryset = OrderInfo
+    serializer_class = OrderInfoSerializer
+
+
+class OrderInfoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = OrderInfo
+    serializer_class = OrderInfoSerializer

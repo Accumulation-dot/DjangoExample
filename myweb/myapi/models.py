@@ -5,31 +5,7 @@ import uuid
 from django.utils.html import format_html
 
 
-class Creation(models.Model):
-    """
-        updated 更新日期
-        created 创建日期
-        """
-    updated = models.DateTimeField(auto_now=True,
-                                   verbose_name='最新更新日期', help_text='最新的更新日期')
-    created = models.DateTimeField(auto_now_add=True,
-                                   verbose_name='创建日期', help_text='创建日期')
 
-    class Meta:
-        abstract = True
-
-
-class UUID(Creation):
-    """
-    使用UUID作为主键的model m_id
-    updated 更新时间
-    created 创建时间
-    """
-    u_id = models.UUIDField(primary_key=True, auto_created=True, default=uuid.uuid4, editable=False,
-                            verbose_name='model id', help_text='唯一的id')
-
-    class Meta:
-        abstract = True
 
 """
 class User(AbstractUser):

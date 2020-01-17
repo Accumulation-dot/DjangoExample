@@ -1,31 +1,30 @@
 from rest_framework import serializers
+
 from myapi.model.order import *
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    """Category Serializer"""
+class SellerSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Category
+        model = Order
         exclude = ('created', 'updated',)
 
 
-class TagSerializer(serializers.ModelSerializer):
-    """ Tag Serializer """
+class OrderSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Tag
+        model = Order
         exclude = ('created', 'updated',)
 
 
-class CommoditySerializer(serializers.ModelSerializer):
-    """Commodity Serializer"""
-    # category_desc =
-    tag = TagSerializer(many=True, required=False)
-    category = CategorySerializer(required=False)
+class OrderInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderInfo
+        exclude = ('updated',)
+
+
+class UserOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Commodity
+        model = UserOrder
         exclude = ('created', 'updated',)
-
-
-
-

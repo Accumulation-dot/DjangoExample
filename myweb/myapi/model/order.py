@@ -39,8 +39,8 @@ class UserOrder(UUID):
                              verbose_name='订单用户名', help_text='订单信息用户名')
     total = models.FloatField(verbose_name='总价', help_text='订单需要的价格')
     order_num = models.CharField(max_length=50, blank=True, default='')
-    commodity_list = models.ManyToManyField(to=Commodity, through='OrderInfo',
-                                            through_fields=('user', 'commodity'),
+    commodity_list = models.ManyToManyField(to=Commodity, through='UserOrderInfo',
+                                            through_fields=('order', 'commodity'),
                                             verbose_name='订单的商品信息', help_text='订单内所有的商品的信息')
 
     class Meta:

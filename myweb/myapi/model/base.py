@@ -36,13 +36,15 @@ class Image(Creation):
                             verbose_name='图片', help_text='展示的图片')
 
     def __str__(self):
-        return self.img_display()
+        return self.url
 
     def img_display(self):
         return format_html(
             '<img src="{}" width="15px"></img>',
             self.url.url,
         )
+
+    img_display.short_description = u'图片'
 
     class Meta:
         verbose_name = '图像'

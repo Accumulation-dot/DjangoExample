@@ -6,7 +6,7 @@ from myapi.model.order import *
 class SellerSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Order
+        model = Seller
         exclude = ('created', 'updated',)
 
 

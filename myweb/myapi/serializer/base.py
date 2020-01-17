@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from myapi.model.commodity import Category
+from myapi.model.base import Image
 
 
 class ImageSerializer(serializers.ModelSerializer):
     """Image Serializer"""
     class Meta:
-        model = Category
+        model = Image
         exclude = ('created', 'updated',)

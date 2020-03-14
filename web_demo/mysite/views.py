@@ -10,7 +10,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from django.core.paginator import Paginator, QuerySetPaginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.auth import get_user_model
+from rest_framework_jwt.utils import jwt_decode_handler
 # Create your views here.
 
 
@@ -98,13 +99,19 @@ def category_list(request, format=None):
         return Response(serializer.data)
 
 
-
 class CategoryView(APIView):
     renderer_classes = [JSONRenderer]
     authentication_classes = []
     permission_classes = []
 
     def get(self, request, format=None):
+        token = request.GET.get('token')
+        toke_user = jwt_decode_handler(token)
+        print(toke_user)
+
         categories = Category.objects.all()
         # return JsonResponse(request, CategorySerializer(categories, many=True).data)
         return Response(CategorySerializer(categories, many=True).data)
+
+
+    def post(self, request, format=None):

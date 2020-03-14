@@ -32,17 +32,22 @@ class UUID(Creation):
 
 
 class Image(Creation):
-    url = models.ImageField(upload_to='img', default='', blank=True, null=True,
+    url = models.ImageField(upload_to='img', default='', blank=True,
+                            # null=True,
                             verbose_name='图片', help_text='展示的图片')
 
     def __str__(self):
-        return self.url
+        if self.url is not None:
+            return self.url
+        return ''
 
     def img_display(self):
-        return format_html(
-            '<img src="{}" width="15px"></img>',
-            self.url.url,
-        )
+        if self.url is not None:
+            return format_html(
+                '<img src="{}" width="15px"></img>',
+                self.url.url,
+            )
+        return ''
 
     img_display.short_description = u'图片'
 

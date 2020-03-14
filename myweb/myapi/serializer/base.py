@@ -4,7 +4,9 @@ from myapi.model.base import Image
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    """Image Serializer"""
+    """
+    Image Serializer
+    """
     class Meta:
         model = Image
         exclude = ('created', 'updated',)

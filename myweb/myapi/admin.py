@@ -11,7 +11,7 @@ from myapi.model.order import *
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'url', 'img_display',)
+    list_display = ('id',)
     readonly_fields = ('img_display',)
 
 
@@ -23,8 +23,8 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'img_display',)
-    readonly_fields = ('img_display',)
+    list_display = ('id', 'title')
+    # readonly_fields = ('img_display',)
     list_editable = ['title']
 
 

@@ -12,9 +12,12 @@ class CustomPagination(PageNumberPagination):
 
     def get_paginated_response(self, data):
         next_link = self.get_next_link()
+        next_response = '0'
+        if next_link:
+            next_response = '1'
         return Response(OrderedDict([
             ('count', self.page.paginator.count),
-            ('next', next_link if next_link is not None else ''),
+            ('next', next_response),
             ('list', data)
         ]))
 

@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os, datetime
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +24,7 @@ SECRET_KEY = '4&^ayqolr1&y)#g#rzaije2704v604uuan@9pf_k4tj4a+kkas'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['192.168.0.100', '*']
 
 # Application definition
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'trade.apps.TradeConfig',
     'advert.apps.AdvertConfig',
+    'pay.apps.PayConfig',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken'
@@ -112,15 +112,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+# LANGUAGE_CODE = 'en-us'
+#
+# TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'zh-hans'
+# 更改时区
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -128,7 +131,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'tools.tools.CustomPagination',
+    #'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -138,11 +142,23 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    )
+    ),
+    # 'DEFAULT_THROTTLE_CLASSES': (
+    #     # 开启匿名用户接口请求频率限制
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     # 开启授权用户接口请求频率限制
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ),
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     # 频率限制有second, minute, hour, day
+    #     # 匿名用户请求频率
+    #     'anon': '30/second',
+    #     # 授权用户请求频率
+    #     'user': '30/second'
+    # },
 }
 
 AUTH_USER_MODEL = 'user.CoinUser'
-
 
 JWT_AUTH = {
     # Token失效时间

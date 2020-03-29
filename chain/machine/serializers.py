@@ -1,8 +1,7 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField, ReadOnlyField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from machine import models
-from user.models import CoinUser
-from user.serializer import UserRegisterSerializer
+from user.serializers import user_info_data
 
 
 class MachineSerializer(ModelSerializer):
@@ -58,5 +57,4 @@ class RecordUpdateSerializer(ModelSerializer):
         return MachineSerializer(machine).data
 
     def get_u_info(self, obj):
-        info = CoinUserInfo.objects.filter(user=obj.user).first()
-        return CoinUserInfoSerializer(info).data
+        return user_info_data(obj.user)

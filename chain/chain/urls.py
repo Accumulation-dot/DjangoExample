@@ -26,6 +26,7 @@ urlpatterns = [
     path('trade/', include('trade.urls'),),
     path('machine/', include('machine.urls'),),
     path('advert/', include('advert.urls'),),
+    path('pay/', include('pay.urls'),),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

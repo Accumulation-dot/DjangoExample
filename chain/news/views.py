@@ -1,9 +1,7 @@
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
-from rest_framework.response import Response
-
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from coins.models import query_award
 from news.models import Content, Record
 from news.serializer import ContentSerializer, RecordSerializer, RecordDetailSerializer
 from tools.tools import CustomPagination
@@ -62,6 +60,8 @@ class RecordView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        award_key = self.request.META.get('HTTP_AWARD')
+        query_award(award_key, user=set.request.user)
 
 
 class RecordDetailView(generics.RetrieveAPIView):

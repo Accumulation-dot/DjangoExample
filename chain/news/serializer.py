@@ -2,7 +2,7 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
 from news.models import Content, Record
-from user.serializer import user_info_data
+from user.serializers import user_info_data
 
 
 class ContentSerializer(ModelSerializer):
@@ -11,6 +11,10 @@ class ContentSerializer(ModelSerializer):
         model = Content
         # fields = '__all__'
         exclude = ('readers', )
+
+
+def news_content(news):
+    return ContentSerializer(Content.objects.filter(news=news.id).first()).data
 
 
 class RecordSerializer(ModelSerializer):
@@ -33,4 +37,4 @@ class RecordDetailSerializer(ModelSerializer):
         return user_info_data(obj.user)
 
     def get_news(self, obj):
-        return ContentSerializer(Content.objects.filter(news=obj.news.id).first()).data
+        return news_content(obj.news)

@@ -11,6 +11,8 @@ class Content(models.Model):
 
     readers = models.ManyToManyField(CoinUser, through='Record', related_name='readers')
 
+    datetime = models.DateTimeField(auto_now=True, verbose_name='创建时间', help_text='创建时间')
+
     def __str__(self):
         return self.title
 

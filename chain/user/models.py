@@ -1,9 +1,16 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
+import time
+import uuid
 
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 # Create your models here.
-from rest_framework.permissions import BasePermission
+from tools.base import BaseModel
+
+
+def address():
+    t = time.time()
+    return uuid.uuid5(uuid.NAMESPACE_DNS, str(uuid.uuid1()) + str(int(t)))
 
 
 class CoinUser(AbstractUser):
@@ -13,30 +20,33 @@ class CoinUser(AbstractUser):
                                              verbose_name='等级', help_text='等级')
 
     class Meta:
-        verbose_name = verbose_name_plural = '用户信息表'
+        verbose_name = verbose_name_plural = '用户表'
 
 
-class CoinUserInfo(models.Model):
-    user = models.ForeignKey(CoinUser, on_delete=models.DO_NOTHING)
-    name = models.CharField(max_length=20, blank=True, default='', verbose_name='用户名称', help_text='用户名称 需要完善信息')
-    coin_number = models.FloatField(default=0.0, verbose_name='用户的积分', help_text='用户积分')
-    created = models.DateTimeField(auto_now=True)
-    frozen = models.FloatField(default=0.0, verbose_name='用户的积分', help_text='用户积分')
-    address = models.CharField(max_length=100, blank=False)
+class CoinUserInfo(BaseModel):
+    user = models.OneToOneField(CoinUser, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=20, blank=True, default='',
+                            verbose_name='用户名称', help_text='用户名称 需要完善信息')
+    address = models.CharField(max_length=100, blank=False, default=address(),
+                               verbose_name='地址', help_text='地址')
 
     class Meta:
-        verbose_name = verbose_name_plural = '用户数量表'
+        verbose_name = verbose_name_plural = "用户信息表"
 
 
-class LevelPermission(BasePermission):
-    message = '等级不够， 请联系管理员'
+class Identifier(models.Model):
+    user = models.OneToOneField(CoinUser, on_delete=models.DO_NOTHING,
+                                verbose_name='用户信息', help_text='用户信息')
+    name = models.CharField(max_length=20,
+                            verbose_name='姓名', help_text='用户信息')
+    number = models.CharField(max_length=20,
+                              verbose_name='ID', help_text='用户身份证信息')
 
-    def has_permission(self, request, view):
-        user = CoinUser.objects.filter(id=request.user.id).first()
-        return user and user.level == 1
+    class Meta:
+        verbose_name = verbose_name_plural = '身份证信息'
 
 
 def user_info_creation(user):
-    info = CoinUserInfo(user=user)
+    info = CoinUserInfo(user=user, name=user.username)
     info.save()
     return info

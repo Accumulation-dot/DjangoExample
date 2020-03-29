@@ -1,9 +1,12 @@
 from django.urls import path
-from rest_framework_jwt.views import obtain_jwt_token
 
-from user.views import UserCreation
+from user.views import UserCreation, identifier_request, login_request
+
+# from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     path('register/', UserCreation.as_view()),
-    path('login/', obtain_jwt_token),
+    # path('login/', obtain_jwt_token),
+    path('login/', login_request),
+    path('identify/', identifier_request),
 ]
